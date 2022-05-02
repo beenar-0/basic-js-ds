@@ -1,4 +1,5 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const {NotImplementedError} = require('../extensions/index.js');
+const {getName} = require("chai/lib/chai/utils");
 
 // const { ListNode } = require('../extensions/list-node.js');
 
@@ -14,23 +15,39 @@ const { NotImplementedError } = require('../extensions/index.js');
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
+    queue = null
 
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    getNode(x) {
+        let node = {}
+        node.value = x;
+        node.next = null;
+        return node
+    }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    getUnderlyingList() {
+        return this.queue
+    }
 
-  dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    enqueue(value) {
+        let res
+        if (this.queue === null) this.queue = this.getNode(value)
+        else {
+            let currentNode = this.queue
+            while (currentNode['next']) {
+                currentNode = currentNode['next']
+                res = currentNode['value']
+            }
+            currentNode['next'] = this.getNode(value)
+        }
+    }
+
+    dequeue() {
+        let res = this.queue['value']
+        this.queue = this.queue['next']
+        return res
+    }
 }
 
 module.exports = {
-  Queue
+    Queue
 };
